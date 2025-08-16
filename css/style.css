@@ -1,0 +1,223 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+
+.container{
+    height: 100vh;
+    width: 100%;
+}
+
+.top{
+    padding: 5px;
+    height: 64px;
+    width: 100%;
+    gap: 10px;
+}
+
+.top .hleft{
+    width: 25%;
+    height: 100%;
+}
+
+.top .hleft .logo{
+    height: 100%;
+    padding-left: 10px;
+}
+
+.top .hleft .logo img{
+    width: 120px;
+}
+
+.top .hleft .home{
+    width: 100%;
+    height: 100%;
+    gap: 15px;
+}
+
+.top .hleft .home span{
+    padding: 14px;
+}
+
+.top .hright{
+    width: 75%;
+    height: 100%;
+}
+
+.top .hright a{
+    text-decoration: none;
+}
+
+.top .hright .reach-buttons {
+    gap: 15px;
+    width: 100%;
+    height: 100%;
+    margin: 0 10px;
+}
+
+.top .hright .reach-buttons a{
+    width: 80px;
+    height: 90%;
+    padding: 5px;
+}
+
+.top .hright .account-buttons{
+    gap: 15px;
+    height: 100%;
+    font-size: 14px;
+}
+
+.top .hright .account-buttons a:first-child{
+    width: 80px;
+    height: 90%;
+    padding: 5px;
+}
+
+.top .hright .account-buttons a:nth-child(2) {
+    width: 110px;
+    height: 90%;
+    padding: 5px;
+}
+
+.bottom{
+    padding: 10px;
+    gap: 10px;
+    min-height: 0;
+}
+
+.bottom .left{
+    height: 100%;
+    width: 25%;
+}
+
+.bottom .left .library{
+    width: 100%;
+    min-height: 0;
+}
+
+.bottom .left .library .heading {
+    font-weight: bold;
+    font-size: 13px;
+    width: 100%;
+    padding: 23px 14px;
+    gap: 15px;
+}
+
+.bottom .left .library .heading img{
+    width: 30px;
+}
+
+.bottom .left .library .songs-list{
+    padding: 10px;
+    gap: 10px;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.bottom .left .library .songs-list .song-card{
+    height: 48px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.bottom .left .library .songs-list .song-card.selected{
+    background-color: rgb(0, 0, 0);
+    box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.2);
+}
+
+.bottom .left .library .songs-list .song-card span{
+    height: 100%;
+    width: 100%;
+    gap: 5px;
+}
+
+.bottom .left .library .songs-list .song-card span img{
+    margin: 5px;
+}
+
+.songs-list .song-card span .song-info,
+.songs-list .song-card span .play-button{
+    padding: 5px;
+}
+
+.songs-list .song-card span .song-info p{
+    min-width: 0;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;   
+}
+
+.songs-list .song-card span .song-info p:nth-child(1){
+    font-size: 12px;
+}
+.songs-list .song-card span .song-info p:nth-child(2),
+.songs-list .song-card span .play-button{
+    font-size: 10px;
+}
+
+.songs-list .song-card span .play-button{
+    gap: 5px;
+}
+
+.bottom .left .left-footer {
+    font-size: 10px;
+    bottom: 0;
+    flex-wrap: wrap;
+    gap: 13px;
+    width: 100%;
+    padding: 14px;
+}
+
+.bottom .right{
+    height: 100%;
+    width: 75%;
+    padding: 5px;
+}
+
+.bottom .right .playbar {
+    width: calc(100% - 10px);
+    height: 64px;
+    background-color: black;
+    bottom: 5px;
+}
+
+.bottom .right .playbar .upper-pb{
+    width: 100%;
+    height: 70%;
+    padding: 15px;
+}
+
+.bottom .right .playbar .upper-pb > * {
+    border: 1px solid white;
+}
+
+
+/* .bottom .right .playbar .upper-pb{
+
+} */
+
+.bottom .right .playbar .lower-pb{
+    width: 100%;
+    height: 30%;
+    padding: 10px;
+}
+
+.bottom .right .playbar .lower-pb .seekbar{
+    width: calc(100% - 30px);
+    height: 2px;
+}
+
+.bottom .right .playbar .lower-pb .seekbar .seekbar-ball{
+    width: 12px;
+    height: 12px;
+    left: 0;
+    z-index: 1000;
+    cursor: grab;
+}
+
+.bottom .right .playbar .lower-pb .seekbar .seekbar-ball:active{
+    cursor: grabbing;
+}

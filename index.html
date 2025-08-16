@@ -5,41 +5,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="utility.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/utility.css">
+
 </head>
 
 <body>
-    <div class="container flex bg-black">
-        <div class="left border bg-black">
-            <div class="home bg-grey rounded m-1 p-1">
-                <div class="logo"><img class="invert" src="logo.svg" alt="logo"></div>
-                <ul>
-                    <li><img class="invert" src="home.svg" alt="home">Home</li>
-                    <li><img class="invert" src="search.svg" alt="search">Search</li>
-                </ul>
-            </div>
-            <div class="library bg-grey rounded m-1 p-1">
-                <div class="heading">
-                    <img class="invert" src="playlist.svg" alt="playlist">
-                    <h2>
-                        Your Library
-                    </h2>
+    <div class="container flex fd-col bg-black clr-white">
+        <div class="top flex ai-center">
+            <div class="hleft flex jc-sb ai-center">
+                <div class="logo flex ai-center"><img class="invert" src="images/logo.svg" alt="logo"></div>
+                <div class="home flex jc-end flex-1">
+                    <span class="flex bg-gray clr-white br-50-per cursor-pointer"><img class="invert"
+                            src="images/home.svg" alt="home">
+                    </span>
+                    <span class="flex bg-gray clr-white br-50-per cursor-pointer"><img class="invert"
+                            src="images/search.svg" alt="search">
+                    </span>
                 </div>
-                <div class="footer flex">
-                    <div><a href="https://www.spotify.com/pk-en/legal/">Legal</a></div>
-                    <div><a href="https://www.spotify.com/pk-en/safetyandprivacy/">Safety & Privacy Center</a></div>
-                    <div><a href="https://www.spotify.com/pk-en/legal/privacy-policy/">Privacy Policy</a></div>
-                    <div><a href="https://www.spotify.com/pk-en/legal/cookies-policy/">Cookies</a></div>
-                    <div><a href="https://www.spotify.com/pk-en/legal/privacy-policy/#s3">About Ads</a></div>
-                    <div><a href="https://www.spotify.com/pk-en/accessibility/">Accessibility</a></div>
+            </div>
+            <div class="hright flex jc-sb ai-center text-bold">
+                <div class="reach-buttons flex ai-center flex-1">
+                    <a class="clr-gray br-1p5-rem flex ai-center jc-center" href="https://www.spotify.com/premium/"
+                        type="button">Premium</a>
+                    <a class="clr-gray br-1p5-rem flex ai-center jc-center" href="https://www.spotify.com/support/"
+                        type="button" target="_blank">Support</a>
+                    <a class="clr-gray br-1p5-rem flex ai-center jc-center" href="https://www.spotify.com/download/"
+                        type="button" target="_blank">Download</a>
+                </div>
+                <div class="account-buttons flex ai-center">
+                    <a class="clr-gray br-1p5-rem flex ai-center jc-center" href="https://www.spotify.com/signup/"
+                        type="button">Sign up</a>
+                    <a class="clr-gray br-1p5-rem flex ai-center jc-center bg-white clr-black"
+                        href="https://www.spotify.com/login/" type="button">Log in</a>
                 </div>
             </div>
         </div>
-        <div class="right border">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt, vitae.
+        <div class="bottom bg-black clr-white flex flex-1">
+            <div class="left flex fd-col bg-gray clr-white br-0p5-rem of-hidden">
+                <div class="library flex fd-col flex-1 of-hidden">
+                    <div class="heading flex ai-center">
+                        <img class="invert" src="images/playlist.svg" alt="playlist">
+                        <h2>
+                            Your Library
+                        </h2>
+                    </div>
+                    <div class="songs-list flex-1 flex fd-col">
+                    </div>
+                </div>
+                <div class="left-footer flex clr-gray">
+                    <div><a class="clr-gray" href="https://www.spotify.com/pk-en/legal/">Legal</a></div>
+                    <div><a class="clr-gray" href="https://www.spotify.com/pk-en/safetyandprivacy/">Safety & Privacy
+                            Center</a></div>
+                    <div><a class="clr-gray" href="https://www.spotify.com/pk-en/legal/privacy-policy/">Privacy
+                            Policy</a></div>
+                    <div><a class="clr-gray" href="https://www.spotify.com/pk-en/legal/cookies-policy/">Cookies</a>
+                    </div>
+                    <div><a class="clr-gray" href="https://www.spotify.com/pk-en/legal/privacy-policy/#s3">About Ads</a>
+                    </div>
+                    <div><a class="clr-gray" href="https://www.spotify.com/pk-en/accessibility/">Accessibility</a></div>
+                </div>
+            </div>
+            <div class="right flex-1 bg-gray clr-white br-0p5-rem of-hidden pos-r">
+                <div class="playbar flex fd-col pos-a br-1p5-rem">
+                    <section class="upper-pb flex jc-sb ai-center">
+                        <div class="song-info">
+                            <p class="song-name">hello</p>
+                            <p class="artist-name">hello</p>
+                        </div>
+                        <div class="control-buttons">
+                            <img src="images/previous.svg" class="previous-button invert cursor-pointer">
+                            <img src="images/play.svg" class="main-play-button invert cursor-pointer">
+                            <img src="images/next.svg" class="next-button invert cursor-pointer">
+                        </div>
+                        <div class="song-duration">
+                            <p></p>
+                        </div>
+                    </section>
+                    <section class="lower-pb flex jc-center ai-center">
+                        <div class="seekbar flex ai-center pos-r bg-white br-1p5-rem cursor-pointer"><div class="seekbar-ball pos-a bg-white br-50-per"></div></div>
+                    </section>
+                </div>
+            </div>
         </div>
     </div>
+    <script src="js/script.js"></script>
 </body>
 
 </html>
