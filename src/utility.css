@@ -2,6 +2,12 @@
     display: flex;
 }
 
+@media screen and (min-width: 768px) {
+    .flex-768{
+        display: flex;
+    }
+}
+
 .fd-col{
     flex-direction: column;
 }

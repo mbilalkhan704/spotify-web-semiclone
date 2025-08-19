@@ -206,8 +206,8 @@
     margin-bottom: 0;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, calc(var(--width-of-playlist-image) + 10px)));
-    justify-content: center;
-    gap: 10px;
+    justify-content: space-evenly;
+    /* gap: 10px; */
     overflow-y: auto;
     grid-auto-rows: max-content;
 }
@@ -215,6 +215,7 @@
 .bottom .right .playlists .playlists-list .playlist-card {
     padding: 5px;
     gap: 5px;
+
     &:hover {
         --background-color: 42, 41, 41;
         background: linear-gradient(to top,
@@ -312,7 +313,7 @@
     padding: 5px 25px;
 }
 
-.bottom .right .playbar .upper-pb >* {
+.bottom .right .playbar .upper-pb>* {
     flex: 0 0 33.333%;
     max-width: 33.3333%;
     width: fit-content;
@@ -384,5 +385,30 @@
     to {
         transform: translateY(0);
         opacity: 1;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .left {
+        width: 35%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        height: 100%;
+        width: 100%;
+    }
+
+    .right {
+        width: 100%;
+    }
+
+    .left {
+        display: none;
+    }
+
+    .hright {
+        display: none;
     }
 }
