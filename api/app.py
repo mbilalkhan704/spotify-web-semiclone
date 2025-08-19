@@ -36,7 +36,10 @@ def to_direct_dropbox(url: str) -> str:
 
 @app.route("/api/songs", methods=["GET"])
 def api_songs():
-    return jsonify({"songsLinks": songsLinks, "songsByPlaylist": songsByPlaylist})
+    direct_links = {k: {"name": v["name"], "url": to_direct_dropbox(v["url"])} 
+                    for k, v in songsLinks.items()}
+    return jsonify({"songsLinks": direct_links, "songsByPlaylist": songsByPlaylist})
+
 
 @app.route("/api/init-durations", methods=["POST"])
 def api_init_durations():
