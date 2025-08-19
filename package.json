@@ -5,6 +5,7 @@
   "main": "src/main.js",
   "type": "module",
   "scripts": {
+    "prepare": "chmod +x ./node_modules/.bin/vite",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
