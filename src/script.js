@@ -181,7 +181,7 @@ async function setPlaylistCards() {
             displaySongCards();
             setListenersOnSongCards();
             let forCheck = false;
-            for (const e of songsListDiv.children) {
+            for (const e of songsListDiv.querySelectorAll(".song-card")) {
                 if (currentSong && e.dataset.songName === playbarSongName.textContent) {
                     toggleSongPlaying(Number(e.dataset.songId), true);
                     forCheck = true;
@@ -202,7 +202,7 @@ async function setPlaylistCards() {
 
 
 /* -------------------- SONGS -------------------- */
-function displaySongCards(playlist = null) {
+function displaySongCards() {
     songsListDiv.innerHTML = '';
     let songs = [];
     if (!currentPlaylistId) {
@@ -294,10 +294,8 @@ function toggleSongPlaying(songId, songsListChanged = false) {
 
     togglePlaybar();
     if (!songsListChanged) {
-        console.log(clickedSongCard.dataset.songPlaying)
         if (clickedSongCard.dataset.songPlaying === "false") {
-            console.log("In")
-            for (const sibling of songsListDiv.children) {
+            for (const sibling of songsListDiv.querySelectorAll(".song-card")) {
                 sibling.firstElementChild.lastElementChild.querySelector('img').src = getPlayPauseSVGs('play');
                 sibling.dataset.songPlaying = "false";
                 sibling.classList.remove('selected');
@@ -323,10 +321,9 @@ function toggleSongPlaying(songId, songsListChanged = false) {
 }
 
 function setListenersOnSongCards() {
-    for (const e of songsListDiv.children) {
+    for (const e of songsListDiv.querySelectorAll(".song-card")) {
         e.firstElementChild.lastElementChild.addEventListener('click', () => {
             toggleSongPlaying(Number(e.dataset.songId));
-            console.log(currentSongId)
         });
     }
 }
@@ -413,16 +410,16 @@ async function main() {
 
 
     mainPlayButton.addEventListener('click', () => {
-        if (currentSongId == null) toggleSongPlaying(songsListDiv.children[0].dataset.songId)
+        if (currentSongId == null) toggleSongPlaying(songsListDiv.querySelectorAll(".song-card")[0].dataset.songId)
         else toggleSongPlaying(currentSongId)
     })
     previousButton.addEventListener('click', () => {
-        if (currentSongId !== null && (currentSongId > 0 && currentSongId <= songsListDiv.children.length - 1)) toggleSongPlaying(Number(currentSongId) - 1)
-        else if (currentSongId == 0) toggleSongPlaying(songsListDiv.children.length - 1)
+        if (currentSongId !== null && (currentSongId > 0 && currentSongId <= songsListDiv.querySelectorAll(".song-card").length - 1)) toggleSongPlaying(Number(currentSongId) - 1)
+        else if (currentSongId == 0) toggleSongPlaying(songsListDiv.querySelectorAll(".song-card").length - 1)
     })
     nextButton.addEventListener('click', () => {
-        if (currentSongId !== null && (currentSongId >= 0 && currentSongId < songsListDiv.children.length - 1)) toggleSongPlaying(Number(currentSongId) + 1)
-        else if (currentSongId == songsListDiv.children.length - 1) toggleSongPlaying(0)
+        if (currentSongId !== null && (currentSongId >= 0 && currentSongId < songsListDiv.querySelectorAll(".song-card").length - 1)) toggleSongPlaying(Number(currentSongId) + 1)
+        else if (currentSongId == songsListDiv.querySelectorAll(".song-card").length - 1) toggleSongPlaying(0)
     })
     document.addEventListener("keydown", (event) => {
         switch (event.code) {
