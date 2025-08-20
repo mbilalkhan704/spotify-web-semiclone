@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- SEO -->
     <title>Being Spotify</title>
-    <meta name="description" content="Stream your favorite songs and playlists seamlessly with Being Spotify. Discover, play, and enjoy.">
+    <meta name="description"
+        content="Stream your favorite songs and playlists seamlessly with Being Spotify. Discover, play, and enjoy.">
     <meta name="keywords" content="Music, Player, Songs, Playlists, Streaming, MP3, Online Music">
     <meta name="author" content="Muhammad Bilal Khan">
 
@@ -25,7 +26,7 @@
 </head>
 
 <body>
-    <div class="container flex fd-col bg-black clr-white">
+    <div class="container pos-r flex fd-col bg-black clr-white">
         <div class="top flex ai-center">
             <div class="hleft flex jc-sb ai-center">
                 <div class="logo flex ai-center"><img class="invert" src="/images/logo.svg" alt="logo"></div>
@@ -35,6 +36,15 @@
                     </span>
                     <span class="flex bg-gray clr-white br-50-per cursor-pointer"><img class="invert"
                             src="/images/search.svg" alt="search">
+                    </span>
+                    <span class="bg-gray clr-white br-0p5-rem cursor-pointer" id="toggleMenu" aria-label="Open menu"
+                        aria-expanded="false" aria-controls="menuPanel"></button>
+                        <svg class="hamburger-svg" viewBox="0 0 24 24" aria-hidden="true">
+                            <rect class="hamburger-bg" x="1" y="1" width="22" height="22" rx="12" />
+                            <line class="hamburger-line line--top" x1="5" y1="12" x2="19" y2="12" />
+                            <line class="hamburger-line line--middle" x1="5" y1="12" x2="19" y2="12" />
+                            <line class="hamburger-line line--bottom" x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
                     </span>
                 </div>
             </div>
@@ -55,29 +65,36 @@
                 </div>
             </div>
         </div>
+        <div class="menu-list flex pos-f fd-col bg-black of-hidden">
+            <button class="bg-black clr-white flex ai-center jc-start cursor-pointer"><span>Log in</span></button>
+            <button class="bg-black clr-white flex ai-center jc-start cursor-pointer"><span>Sign up</span></button>
+            <div class="clr-white">
+                <div></div>
+            </div>
+            <div class="flex fd-col">
+                <button class="bg-black clr-white flex ai-center jc-start cursor-pointer"><span>Premium</span></button>
+                <button class="bg-black clr-white flex ai-center jc-start cursor-pointer"><span>Help</span></button>
+                <button class="bg-black clr-white flex ai-center jc-start cursor-pointer"><span>Download</span></button>
+                <button class="bg-black clr-white flex ai-center jc-start cursor-pointer"><span>Privacy</span></button>
+                <button class="bg-black clr-white flex ai-center jc-start cursor-pointer"><span>Terms</span></button>
+            </div>
+        </div>
         <div class="bottom bg-black clr-white flex flex-1">
-            <div class="left flex-768 fd-col bg-gray clr-white br-0p5-rem of-hidden">
+            <div class="left flex fd-col bg-gray clr-white br-0p5-rem of-hidden">
                 <div class="library flex fd-col flex-1 of-hidden">
-                    <div class="heading flex ai-center">
-                        <img class="invert" src="/images/library.svg" alt="library">
-                        <h2>
-                            Your Library
-                        </h2>
+                    <div class="heading flex ai-center jc-sb">
+                        <div class="flex ai-center flex-1">
+                            <img class="invert" src="/images/library.svg" alt="library">
+                            <h2>
+                                Your Library
+                            </h2>
+                        </div>
+                        <div class="back-to-playlist flex ai-center" id="back-to-playlist">
+                            <img class="invert" src="/images/back.svg" alt="back">
+                        </div>
                     </div>
-                    <div class="songs-list flex-1 flex fd-col">
+                    <div class="songs-list flex-1 flex fd-col of-hidden">
                     </div>
-                </div>
-                <div class="left-footer flex clr-gray">
-                    <div><a class="clr-gray" href="https://www.spotify.com/pk-en/legal/">Legal</a></div>
-                    <div><a class="clr-gray" href="https://www.spotify.com/pk-en/safetyandprivacy/">Safety & Privacy
-                            Center</a></div>
-                    <div><a class="clr-gray" href="https://www.spotify.com/pk-en/legal/privacy-policy/">Privacy
-                            Policy</a></div>
-                    <div><a class="clr-gray" href="https://www.spotify.com/pk-en/legal/cookies-policy/">Cookies</a>
-                    </div>
-                    <div><a class="clr-gray" href="https://www.spotify.com/pk-en/legal/privacy-policy/#s3">About Ads</a>
-                    </div>
-                    <div><a class="clr-gray" href="https://www.spotify.com/pk-en/accessibility/">Accessibility</a></div>
                 </div>
             </div>
             <div class="right flex-1 bg-gray clr-white br-0p5-rem of-hidden pos-r">

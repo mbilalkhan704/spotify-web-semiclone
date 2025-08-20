@@ -11,6 +11,7 @@ const mainPlayButton = document.querySelector('.main-play-button');
 const previousButton = document.querySelector('.previous-button');
 const nextButton = document.querySelector('.next-button');
 const seekbarBall = document.querySelector('.seekbar-ball');
+let windowWidth = window.innerWidth;
 
 let isDragging = false;
 let offsetXPercent = 0;
@@ -120,16 +121,20 @@ async function setDurationsForPlaylists() {
 /* -------------------- PLAYBAR -------------------- */
 function togglePlaybar() {
     if (!playbar.classList.contains('active')) {
-        let scroll = false;
-        if (playlistListDiv.scrollTop + playlistListDiv.clientHeight >= playlistListDiv.scrollHeight - 150) {
-            scroll = true;
-        }
-        playlistListDiv.style.marginBottom = "calc(var(--playbar-height) + var(--playbar-bottom-distance))";
-        if (scroll) {
-            playlistListDiv.scrollTo({
-                top: playlistListDiv.scrollHeight,
-                behavior: "smooth"
-            });
+        let elementsToApply = (windowWidth > 768) ? [playlistListDiv] : [playlistListDiv, document.querySelector('.left')];
+        for (const element of elementsToApply) {
+            if (element === playlistListDiv) {
+                element.style.marginBottom = "calc(var(--playbar-height) + var(--playbar-bottom-distance))";
+                if (element.scrollTop + element.clientHeight >= element.scrollHeight - 150) {
+                    element.scrollTo({
+                        top: element.scrollHeight,
+                        behavior: "smooth"
+                    });
+                }
+            }
+            else {
+                element.style.paddingBottom = "calc(var(--playbar-height) + var(--playbar-bottom-distance))";
+            }
         }
         playbar.classList.add('active')
     }
@@ -183,6 +188,14 @@ async function setPlaylistCards() {
                 }
             }
             if (!forCheck) currentSongId = null;
+            if (windowWidth < 500) {
+                document.querySelector(".bottom .left").style.display = 'flex';
+                document.querySelector(".bottom .right").style.display = 'none';
+            }
+            document.getElementById('back-to-playlist').addEventListener('click', () => {
+                document.querySelector(".bottom .left").style.display = 'none';
+                document.querySelector(".bottom .right").style.display = 'flex';
+            })
         })
     });
 }
@@ -205,17 +218,36 @@ function displaySongCards(playlist = null) {
     if (songs.length > 0) {
         for (const [index, song] of songs.entries()) {
             songsListDiv.innerHTML = songsListDiv.innerHTML + `<div class="song-card br-0p5-rem" data-song-id = ${index} data-song-playing ="false" data-song-name = "${song[0]}">
-                            <span class="flex ai-center">
+                            <span class="flex ai-center pos-r">
                                 <img class="invert" src="/images/music.svg" alt="">
                                 <div class="song-info flex-1 flex fd-col jc-sp ai-start of-hidden">
                                     <p class="song-name of-hidden">${song[0]}</p>
                                     <p class="artist-name of-hidden">${(song[1])}</p>
-                                </div>
+                                    </div>
+                                    <p class="popover flex pos-a bg-gray clr-white br-0p5-rem of-hidden">${song[0]}<br>${song[1]}</p>
                                 <button class="play-button flex jc-sb ai-center bg-none bd-none clr-white of-hidden cursor-pointer"><span>Play now</span><img class="play-btn" src=${getPlayPauseSVGs('play')} alt=""></button>
                             </span>
                         </div>`
         }
     }
+    const elementIs =  (songsListDiv.scrollHeight > songsListDiv.clientHeight) ? songsListDiv : songsListDiv.parentElement;
+    elementIs.insertAdjacentHTML("beforeend",`<div class="left-footer flex clr-gray">
+                            <div><a class="clr-gray" href="https://www.spotify.com/pk-en/legal/">Legal</a></div>
+                            <div><a class="clr-gray" href="https://www.spotify.com/pk-en/safetyandprivacy/">Safety &
+                                    Privacy
+                                    Center</a></div>
+                            <div><a class="clr-gray" href="https://www.spotify.com/pk-en/legal/privacy-policy/">Privacy
+                                    Policy</a></div>
+                            <div><a class="clr-gray"
+                                    href="https://www.spotify.com/pk-en/legal/cookies-policy/">Cookies</a>
+                            </div>
+                            <div><a class="clr-gray" href="https://www.spotify.com/pk-en/legal/privacy-policy/#s3">About
+                                    Ads</a>
+                            </div>
+                            <div><a class="clr-gray"
+                                    href="https://www.spotify.com/pk-en/accessibility/">Accessibility</a>
+                            </div>
+                        </div>`);
 }
 
 function setCurrentSong(songId, songCard) {
@@ -300,7 +332,7 @@ function setListenersOnSongCards() {
 }
 
 
-/* -------------------- SEEKBAR -------------------- */
+/* -------------------- INITIALIZERS (SEEKBAR, HAMBURGER, MENU LIST) -------------------- */
 function initSeekbar(action = "apply") {
     const parent = seekbarBall.parentElement;
 
@@ -349,16 +381,39 @@ function initSeekbar(action = "apply") {
     }
 }
 
+function initHamburger() {
+    const btn = document.getElementById('toggleMenu');
+    const menuList = document.querySelector('.menu-list');
+    btn.addEventListener('click', () => {
+        const active = btn.classList.toggle('active');
+        btn.setAttribute('aria-expanded', String(active));
+        btn.setAttribute('aria-label', active ? 'Close menu' : 'Open menu');
+        menuList.classList.toggle('open', active);
+    });
+}
+
+function initMenuList() {
+    const btnLinks = ['https://www.spotify.com/login/', 'https://www.spotify.com/signup/', 'https://www.spotify.com/premium/', 'https://www.spotify.com/support/', 'https://www.spotify.com/download/', 'https://www.spotify.com/pk-en/legal/privacy-policy/', 'https://www.spotify.com/pk-en/legal/end-user-agreement/']
+    document.querySelectorAll('.menu-list button').forEach((el, index) => {
+        el.addEventListener('click', () => {
+            if (index > 2) window.open(btnLinks[index], "_blank", "noopener,noreferrer");
+            else window.location.href = btnLinks[index];
+        });
+    });
+}
+
 /* -------------------- MAIN -------------------- */
 async function main() {
     await getPlaylistCards();
     await setPlaylistCards();
     displaySongCards();
     setListenersOnSongCards();
+    initHamburger();
+    initMenuList();
 
 
     mainPlayButton.addEventListener('click', () => {
-        if (!currentSongId) toggleSongPlaying(songsListDiv.children[0].dataset.songId)
+        if (currentSongId == null) toggleSongPlaying(songsListDiv.children[0].dataset.songId)
         else toggleSongPlaying(currentSongId)
     })
     previousButton.addEventListener('click', () => {
@@ -369,6 +424,26 @@ async function main() {
         if (currentSongId !== null && (currentSongId >= 0 && currentSongId < songsListDiv.children.length - 1)) toggleSongPlaying(Number(currentSongId) + 1)
         else if (currentSongId == songsListDiv.children.length - 1) toggleSongPlaying(0)
     })
+    document.addEventListener("keydown", (event) => {
+        switch (event.code) {
+            case "KeyJ":
+                previousButton.click();
+                break;
+            case "KeyK":
+            case "Space":
+                event.preventDefault();
+                mainPlayButton.click();
+                break;
+            case "KeyL":
+                nextButton.click();
+                break;
+        }
+    });
+
+
+    window.addEventListener("resize", () => {
+        windowWidth = window.innerWidth;
+    });
     await setDurationsForPlaylists();
 }
 

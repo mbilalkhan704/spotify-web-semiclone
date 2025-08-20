@@ -126,7 +126,7 @@ button:focus {
 }
 
 ::-webkit-scrollbar-track {
-    background: #1e1e1e;    /* dark track background */
+    background: #1e1e1e;
     border-radius: 6px;
 }
 
@@ -142,7 +142,7 @@ button:focus {
 
 /* Firefox */
 * {
-    scrollbar-width: thin;            /* thin scrollbar */
+    scrollbar-width: thin;
     scrollbar-color: #555 #1e1e1e;   /* thumb color | track color */
 }
 

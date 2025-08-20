@@ -102,17 +102,29 @@
 .bottom .left .library .heading {
     font-size: 13px;
     width: 100%;
+}
+
+.bottom .left .library .heading div:nth-child(1) {
     padding: 23px 14px;
     gap: 15px;
 }
 
-.bottom .left .library .heading img {
+.bottom .left .library .heading div:nth-child(1) img {
     width: 30px;
 }
 
+.bottom .left .library .heading div:nth-child(2) {
+    width: fit-content;
+    padding-right: 20px;
+}
+
+.bottom .left .library .heading div:nth-child(2) img {
+    display: none;
+}
+
 .bottom .left .library .songs-list {
-    padding: 10px;
-    gap: 10px;
+    padding: 10px 5px;
+    row-gap: 10px;
     overflow-y: auto;
     min-height: 0;
 }
@@ -120,6 +132,7 @@
 .bottom .left .library .songs-list .song-card {
     height: 48px;
     border: 1px solid rgba(255, 255, 255, 0.5);
+    width: 100%;
 }
 
 .bottom .left .library .songs-list .song-card.selected {
@@ -140,6 +153,25 @@
 .songs-list .song-card span .song-info,
 .songs-list .song-card span .play-button {
     padding: 5px;
+}
+
+.songs-list .song-card span p:nth-child(3).popover {
+    top: 80%;
+    z-index: 10000;
+    transform: translateX(30%);
+    padding: 8px 12px;
+    white-space: normal;
+    word-wrap: break-word;
+    max-width: 200px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease-in-out;
+    font-size: 10px;
+}
+
+.songs-list .song-card span:hover p:nth-child(3).popover {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .songs-list .song-card span .song-info p {
@@ -191,8 +223,8 @@
 }
 
 .bottom .right .playlists .heading {
-    width: 100%;
     font-size: 13px;
+    width: 100%;
     padding: 23px 14px;
     gap: 15px;
 }
@@ -205,7 +237,7 @@
     padding: 10px;
     margin-bottom: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, calc(var(--width-of-playlist-image) + 10px)));
+    grid-template-columns: repeat(auto-fill, minmax(var(--width-of-playlist-image), calc(var(--width-of-playlist-image) + 10px)));
     justify-content: space-evenly;
     /* gap: 10px; */
     overflow-y: auto;
@@ -317,7 +349,6 @@
     flex: 0 0 33.333%;
     max-width: 33.3333%;
     width: fit-content;
-    /* border: 1px solid white; */
 }
 
 .bottom .right .playbar .upper-pb div:nth-child(1) p {
@@ -376,6 +407,117 @@
     cursor: grabbing;
 }
 
+/* ---------------HAMBURGER------------------ */
+:root {
+    --icon-size: 48px;
+    --line-color: #fff;
+    --bg-fill: transparent;
+    --bg-radius: 12px;
+    --line-width: 1.2;
+    --transition: 220ms ease;
+}
+
+.top .hleft .home span:nth-child(3) {
+    display: none;
+    padding: 5px;
+}
+
+#toggleMenu:focus-visible {
+    outline: 2px solid #6aa9ff;
+    outline-offset: 2px;
+}
+
+
+.hamburger-svg {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    display: block;
+}
+
+.hamburger-line {
+    transform-origin: 12px 12px;
+    transition: transform var(--transition), opacity var(--transition);
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-width: var(--line-width);
+}
+
+.line--top {
+    transform: translateY(-5px);
+}
+
+.line--middle {
+    transform: translateY(0);
+}
+
+.line--bottom {
+    transform: translateY(5px);
+}
+
+#toggleMenu.active .line--top {
+    transform: rotate(45deg);
+}
+
+#toggleMenu.active .line--middle {
+    opacity: 0;
+    transform: scaleX(0.2);
+}
+
+#toggleMenu.active .line--bottom {
+    transform: rotate(-45deg);
+}
+
+.hamburger-bg {
+    fill: var(--bg-fill);
+    rx: var(--bg-radius);
+}
+
+/* ------------------------MENU LIST------------------------- */
+.menu-list {
+    top: 64px;
+    z-index: 10000;
+    padding: 15px;
+    width: 100%;
+    height: calc(100% - 64px);
+    transform: translateX(100%);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.menu-list.open {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.menu-list button {
+    border: none;
+    margin: 10px;
+    padding: 4px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    transition-property: transform;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0.3, 0, 0, 1);
+}
+
+.menu-list button:hover {
+    transform: scale(1.05) translateX(-3px);
+}
+
+
+.menu-list>button:nth-child(1),
+.menu-list>button:nth-child(2) {
+    font-size: 20px;
+}
+
+.menu-list>div:nth-child(3) div::after {
+    content: '___';
+    margin: 0 35px;
+}
+
+/* ------------------------ANIMATIONS------------------------- */
 @keyframes slide-up {
     from {
         transform: translateY(150%);
@@ -388,27 +530,95 @@
     }
 }
 
+/* -----------------------RESPONSIVENESS---------------------------- */
 @media screen and (max-width: 1024px) {
-    .left {
+
+    .bottom .left,
+    .top .hleft {
         width: 35%;
+    }
+
+    .top .hright {
+        width: 85%;
     }
 }
 
 @media screen and (max-width: 768px) {
-    .container {
-        height: 100%;
+    .top .hleft {
         width: 100%;
     }
 
-    .right {
-        width: 100%;
-    }
-
-    .left {
+    .top .hleft .home span:nth-child(1),
+    .top .hleft .home span:nth-child(2) {
         display: none;
+    }
+
+    .top .hleft .home span:nth-child(3) {
+        display: flex;
+    }
+
+    .bottom {
+        flex-direction: row-reverse;
+    }
+
+    .bottom .right {
+        width: 45%;
+    }
+
+    .bottom .left {
+        width: 55%;
     }
 
     .hright {
         display: none;
+    }
+
+    .bottom .right {
+        position: static;
+    }
+
+    :root{
+        --playbar-bottom-distance: 15px;
+    }
+
+    .bottom .right .playbar {
+        position: fixed;
+        width: calc(100% - 30px);
+    }
+}
+
+@media screen and (max-width: 500px) {
+    :root {
+        --height-of-playlist-card: 230px;
+        --width-of-playlist-image: 130px;
+    }
+
+    .bottom .left {
+        display: none;
+        width: 100%;
+    }
+
+    .bottom .right .playlists .heading img,
+    .bottom .left .library .heading div img {
+        width: 24px;
+    }
+
+    .heading div h2,
+    .heading h2 {
+        font-size: 18px;
+    }
+
+    .bottom .left .library .heading div:nth-child(2) img {
+        display: flex;
+    }
+
+    .bottom .right .playlists .playlists-list .playlist-card .pt-top img.play-btn:nth-child(2) {
+        transform: translateY(0);
+        opacity: 1;
+        animation: none !important;
+    }
+
+    .bottom .right .playlists .playlists-list .playlist-card .pt-top img.play-btn:nth-child(2).active {
+        animation: none !important;
     }
 }
