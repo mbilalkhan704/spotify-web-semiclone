@@ -230,8 +230,9 @@ function displaySongCards() {
                         </div>`
         }
     }
-    const elementIs =  (songsListDiv.scrollHeight > songsListDiv.clientHeight) ? songsListDiv : songsListDiv.parentElement;
-    elementIs.insertAdjacentHTML("beforeend",`<div class="left-footer flex clr-gray">
+    if (!document.querySelector('.left-footer')) {
+        const elementIs = (songsListDiv.scrollHeight > songsListDiv.clientHeight) ? songsListDiv : songsListDiv.parentElement;
+        elementIs.insertAdjacentHTML("beforeend", `<div class="left-footer flex clr-gray">
                             <div><a class="clr-gray" href="https://www.spotify.com/pk-en/legal/">Legal</a></div>
                             <div><a class="clr-gray" href="https://www.spotify.com/pk-en/safetyandprivacy/">Safety &
                                     Privacy
@@ -248,6 +249,7 @@ function displaySongCards() {
                                     href="https://www.spotify.com/pk-en/accessibility/">Accessibility</a>
                             </div>
                         </div>`);
+    }
 }
 
 function setCurrentSong(songId, songCard) {
