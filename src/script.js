@@ -1,5 +1,7 @@
-import songsLinks from './songsLinks.json';
-import songsByPlaylist from './songsByPlaylist.json';
+// import songsLinks from './songsLinks.json';
+// import songsByPlaylist from './songsByPlaylist.json';
+const songsLinks = JSON.parse(import.meta.env.VITE_SONGS_LINKS_JSON);
+const songsByPlaylist = JSON.parse(import.meta.env.VITE_SONGS_PLAYLISTS_JSON);
 
 const songsListDiv = document.querySelector(".songs-list");
 const playlistListDiv = document.querySelector(".playlists-list");
