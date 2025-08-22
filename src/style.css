@@ -588,6 +588,10 @@
         width: calc(var(--right-width) + var(--left-width) - (2 * var(--bottom-padding)) - (2 * var(--right-padding)));
         right: calc(var(--bottom-padding) + var(--right-padding));
     }
+
+    .bottom .playbar .upper-pb div:nth-child(2) img{
+        width: 30px;
+    }
 }
 
 @media screen and (max-width: 500px) {
