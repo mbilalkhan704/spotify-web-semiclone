@@ -1,12 +1,12 @@
-const songsLinks = JSON.parse(import.meta.env.VITE_SONGS_LINKS_JSON);
-const songsByPlaylist = JSON.parse(import.meta.env.VITE_SONGS_PLAYLISTS_JSON);
+import songsLinks from './songsLinks.json';
+import songsByPlaylist from './songsByPlaylist.json';
 
 const songsListDiv = document.querySelector(".songs-list");
 const playlistListDiv = document.querySelector(".playlists-list");
 const playbar = document.querySelector(".playbar")
-const playbarSongName = document.querySelector(".bottom .right .playbar .upper-pb .song-info .song-name")
-const playbarArtistName = document.querySelector(".bottom .right .playbar .upper-pb .song-info .artist-name")
-const playbarSongDuration = document.querySelector(".bottom .right .playbar .upper-pb .song-duration p")
+const playbarSongName = document.querySelector(".bottom .playbar .upper-pb .song-info .song-name")
+const playbarArtistName = document.querySelector(".bottom .playbar .upper-pb .song-info .artist-name")
+const playbarSongDuration = document.querySelector(".bottom .playbar .upper-pb .song-duration p")
 const mainPlayButton = document.querySelector('.main-play-button');
 const previousButton = document.querySelector('.previous-button');
 const nextButton = document.querySelector('.next-button');
@@ -69,76 +69,25 @@ const capitalizer = (str) =>
         .map(part => part.charAt(0).toUpperCase() + part.slice(1))
         .join(' ');
 
-
-/* -------------------- DURATIONS -------------------- */
-// Cache durations in localStorage
-async function getAudioDuration(url) {
-    return new Promise((resolve, reject) => {
-        const audio = new Audio();
-        audio.src = url.replace("dl=0", "dl=1"); // Dropbox fix
-        audio.addEventListener("loadedmetadata", () => resolve(audio.duration));
-        audio.addEventListener("error", () => reject("Failed to load: " + url));
-    });
-}
-
-async function getCachedDuration(url) {
-    const key = `duration_${url}`;
-    const cached = localStorage.getItem(key);
-    if (cached) return parseFloat(cached);
-
-    const duration = await getAudioDuration(url);
-    localStorage.setItem(key, duration);
-    return duration;
-}
-
-async function getPlaylistDuration(playlistName) {
-    const key = Object.keys(songsByPlaylist).find(
-        pl => pl.toLowerCase() === playlistName.toLowerCase()
-    );
-    if (!key) return 0;
-
-    const songsArray = songsByPlaylist[key].songs;
-    let total = 0;
-    for (const songId of songsArray) {
-        const url = songsLinks[songId].url;
-        total += await getCachedDuration(url);
-    }
-    return total;
-}
-
-async function setDurationsForPlaylists() {
-    const playlistCards = Array.from(playlistListDiv.querySelectorAll(".playlist-card"));
-    const promises = playlistCards.map(async el => {
-        const playlistName = el.dataset.playlistName;
-        const totalDuration = await getPlaylistDuration(playlistName);
-        const p = el.querySelector('.totalDuration');
-        if (p) p.textContent = formatTime(totalDuration);
-    });
-    await Promise.all(promises);
-}
-
-
 /* -------------------- PLAYBAR -------------------- */
 function togglePlaybar() {
-    if (!playbar.classList.contains('active')) {
-        let elementsToApply = (windowWidth > 768) ? [playlistListDiv] : [playlistListDiv, document.querySelector('.left')];
-        for (const element of elementsToApply) {
-            if (element === playlistListDiv) {
-                element.style.marginBottom = "calc(var(--playbar-height) + var(--playbar-bottom-distance))";
-                if (element.scrollTop + element.clientHeight >= element.scrollHeight - 150) {
-                    element.scrollTo({
-                        top: element.scrollHeight,
-                        behavior: "smooth"
-                    });
-                }
-            }
-            else {
-                element.style.paddingBottom = "calc(var(--playbar-height) + var(--playbar-bottom-distance))";
-            }
+    if (playbar.classList.contains('active')) return;
+
+    const elementsToApply = (windowWidth > 768) ? [playlistListDiv] : [playlistListDiv, document.querySelector('.left .library')];
+    const marginValue = `calc(var(--playbar-height) + var(--playbar-bottom-distance))`;
+
+    elementsToApply.forEach(element => {
+        element.style.marginBottom = marginValue;
+        if (element === playlistListDiv && element.scrollTop + element.clientHeight >= element.scrollHeight - 150) {
+            element.scrollTo({
+                top: element.scrollHeight,
+                behavior: "smooth"
+            });
         }
-        playbar.classList.add('active')
-    }
+    });
+    playbar.classList.add('active');
 }
+
 
 
 /* -------------------- PLAYLISTS -------------------- */
@@ -154,7 +103,6 @@ async function getPlaylistCards() {
                                     <h4>${pl}</h4>
                                         <section class="playlist-info flex fd-col of-hidden">
                                                 <p>${songsByPlaylist[pl].tagline}</p>
-                                                <p class="totalDuration"></p>
                                         </section>
                                 </div>
                         </div>`
@@ -188,7 +136,7 @@ async function setPlaylistCards() {
                 }
             }
             if (!forCheck) currentSongId = null;
-            if (windowWidth < 500) {
+            if (windowWidth <= 500) {
                 document.querySelector(".bottom .left").style.display = 'flex';
                 document.querySelector(".bottom .right").style.display = 'none';
             }
@@ -231,7 +179,7 @@ function displaySongCards() {
         }
     }
     if (!document.querySelector('.left-footer')) {
-        const elementIs = (songsListDiv.scrollHeight > songsListDiv.clientHeight) ? songsListDiv : songsListDiv.parentElement;
+        const elementIs = (windowWidth <= 500) ? songsListDiv : songsListDiv.parentElement;
         elementIs.insertAdjacentHTML("beforeend", `<div class="left-footer flex clr-gray">
                             <div><a class="clr-gray" href="https://www.spotify.com/pk-en/legal/">Legal</a></div>
                             <div><a class="clr-gray" href="https://www.spotify.com/pk-en/safetyandprivacy/">Safety &
@@ -443,7 +391,6 @@ async function main() {
     window.addEventListener("resize", () => {
         windowWidth = window.innerWidth;
     });
-    await setDurationsForPlaylists();
 }
 
 main()

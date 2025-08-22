@@ -7,6 +7,16 @@
     font-family: "Roboto", sans-serif;
 }
 
+:root {
+    --right-padding: 5px;
+    --left-padding: 5px;
+    --bottom-padding: 10px;
+    --bottom-gap: 10px;
+    --left-width: 25%;
+    --right-width: calc(100% - var(--left-width));
+    --right-scrollbar-adjustment: 2px;
+}
+
 .container {
     height: 100vh;
     width: 100%;
@@ -84,14 +94,14 @@
 }
 
 .bottom {
-    padding: 10px;
-    gap: 10px;
+    padding: var(--bottom-padding);
+    gap: var(--bottom-gap);
     min-height: 0;
 }
 
 .bottom .left {
     height: 100%;
-    width: 25%;
+    width: var(--left-width);
 }
 
 .bottom .left .library {
@@ -169,10 +179,12 @@
     font-size: 10px;
 }
 
-.songs-list .song-card span:hover p:nth-child(3).popover {
+.songs-list .song-card span>div.song-info:hover~.popover {
     opacity: 1;
     pointer-events: auto;
 }
+
+
 
 .songs-list .song-card span .song-info p {
     min-width: 0;
@@ -207,13 +219,13 @@
     --height-of-playlist-card: 250px;
     --width-of-playlist-image: 150px;
     --playbar-height: 64px;
-    --playbar-bottom-distance: 5px;
+    --playbar-bottom-distance: calc(var(--bottom-padding) + var(--right-padding));
 }
 
 .bottom .right {
     height: 100%;
-    width: 75%;
-    padding: 5px;
+    width: var(--right-width);
+    padding: var(--right-padding);
 }
 
 .bottom .right .playlists {
@@ -239,7 +251,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(var(--width-of-playlist-image), calc(var(--width-of-playlist-image) + 10px)));
     justify-content: space-evenly;
-    /* gap: 10px; */
     overflow-y: auto;
     grid-auto-rows: max-content;
 }
@@ -326,8 +337,9 @@
     margin: 2px;
 }
 
-.bottom .right .playbar {
-    width: calc(100% - 10px);
+.bottom .playbar {
+    width: calc(var(--right-width) - var(--bottom-gap) - (3*var(--bottom-padding)) - var(--right-padding) + var(--right-scrollbar-adjustment));
+    right: calc(2*var(--bottom-padding));
     height: var(--playbar-height);
     background-color: black;
     bottom: var(--playbar-bottom-distance);
@@ -335,27 +347,27 @@
     opacity: 0;
 }
 
-.bottom .right .playbar.active {
+.bottom .playbar.active {
     animation: slide-up 0.4s ease-out forwards;
 }
 
-.bottom .right .playbar .upper-pb {
+.bottom .playbar .upper-pb {
     width: 100%;
     height: 70%;
     padding: 5px 25px;
 }
 
-.bottom .right .playbar .upper-pb>* {
+.bottom .playbar .upper-pb>* {
     flex: 0 0 33.333%;
     max-width: 33.3333%;
     width: fit-content;
 }
 
-.bottom .right .playbar .upper-pb div:nth-child(1) p {
+.bottom .playbar .upper-pb div:nth-child(1) p {
     padding: 0px 5px;
 }
 
-.bottom .right .playbar .upper-pb>* p {
+.bottom .playbar .upper-pb>* p {
     font-size: 11px;
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -365,7 +377,7 @@
     width: fit-content;
 }
 
-.bottom .right .playbar .upper-pb div:nth-child(1) p.artist-name {
+.bottom .playbar .upper-pb div:nth-child(1) p.artist-name {
     font-size: 11px;
     white-space: nowrap;
     display: inline-block;
@@ -383,19 +395,19 @@
 }
 
 
-.bottom .right .playbar .lower-pb {
+.bottom .playbar .lower-pb {
     width: 100%;
     height: 30%;
     padding: 10px;
     padding-top: 0;
 }
 
-.bottom .right .playbar .lower-pb .seekbar {
+.bottom .playbar .lower-pb .seekbar {
     width: calc(100% - 30px);
     height: 2px;
 }
 
-.bottom .right .playbar .lower-pb .seekbar .seekbar-ball {
+.bottom .playbar .lower-pb .seekbar .seekbar-ball {
     width: 12px;
     height: 12px;
     left: 0;
@@ -403,7 +415,7 @@
     cursor: grab;
 }
 
-.bottom .right .playbar .lower-pb .seekbar .seekbar-ball:active {
+.bottom .playbar .lower-pb .seekbar .seekbar-ball:active {
     cursor: grabbing;
 }
 
@@ -532,8 +544,10 @@
 
 /* -----------------------RESPONSIVENESS---------------------------- */
 @media screen and (max-width: 1024px) {
+    :root {
+        --left-width: 35%;
+    }
 
-    .bottom .left,
     .top .hleft {
         width: 35%;
     }
@@ -561,29 +575,17 @@
         flex-direction: row-reverse;
     }
 
-    .bottom .right {
-        width: 45%;
-    }
-
-    .bottom .left {
-        width: 55%;
+    :root {
+        --left-width: 55%;
     }
 
     .hright {
         display: none;
     }
 
-    .bottom .right {
-        position: static;
-    }
-
-    :root{
-        --playbar-bottom-distance: 15px;
-    }
-
-    .bottom .right .playbar {
-        position: fixed;
-        width: calc(100% - 30px);
+    .bottom .playbar {
+        width: calc(var(--right-width) + var(--left-width) - (2 * var(--bottom-padding)) - (2 * var(--right-padding)));
+        right: calc(var(--bottom-padding) + var(--right-padding));
     }
 }
 
@@ -593,9 +595,13 @@
         --width-of-playlist-image: 130px;
     }
 
+    .bottom .right {
+        width: calc(100% - var(--bottom-gap));
+    }
+
     .bottom .left {
-        display: none;
         width: 100%;
+        display: none;
     }
 
     .bottom .right .playlists .heading img,

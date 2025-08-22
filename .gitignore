@@ -1,3 +1,5 @@
 .env
 venv/
 .vercel
+songsByPlaylist.json
+songsLinks.json
